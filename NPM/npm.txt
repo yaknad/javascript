@@ -1,3 +1,9 @@
+https://docs.npmjs.com/getting-started/installing-npm-packages-locally
+https://egghead.io/lessons/tools-run-npm-scripts-when-files-change-with-onchange - 1:36 (?)
+
+
+Commands:
+*********
 npm install <package> --save (saves to the package.json)
 npm install <package> -D (saves to the Dev Dependencies in package.json)
 npm i <package> = npm install <package> 
@@ -10,15 +16,21 @@ npm start (runs the start script)
 npm run env (shows all npm's env variables)
 npm run script X or: npm run X (run a custom script - X - like "eslint" below)
 
+npm config get prefix (get the home folder of npm - to which it installs globaly)
+sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}  (changes owner of npm's home folders)
+see also: https://docs.npmjs.com/getting-started/fixing-npm-permissions
 
-dependencies:
+
+useful dependencies:
+********************
 html build: pug-cli
 css build: npm i node-sass postcss-cli cssmin -D
 js build: npm i mustache uglify-js -D
 npm i onchange -D (for scripts that doesn't suport the -watch flag)
 
 
-
+useful scripts:
+***************
 "scripts":{
 	"test": "mocha /spec --require babel-register",
 	"test": run multiple scripts in series (if one fails, all stop): "npm run eslint && npm run stylelint && mocha..." or "npm-run-all eslint stylelint mocha" (need to install the npm-run-all package first)
@@ -56,6 +68,3 @@ npm i onchange -D (for scripts that doesn't suport the -watch flag)
 }: 
 
 
-
-
-https://egghead.io/lessons/tools-run-npm-scripts-when-files-change-with-onchange - 1:36
