@@ -1,0 +1,61 @@
+npm install <package> --save (saves to the package.json)
+npm install <package> -D (saves to the Dev Dependencies in package.json)
+npm i <package> = npm install <package> 
+npm i <package> -D = npm install <package> and save it in package.json as dev dependency.
+npm init (create a package.json)
+npm init --force (creates package.json with default answers)
+npm run (runs all the scripts in the package.json)
+npm test (or "npm t" - run test script)
+npm start (runs the start script)
+npm run env (shows all npm's env variables)
+npm run script X or: npm run X (run a custom script - X - like "eslint" below)
+
+
+dependencies:
+html build: pug-cli
+css build: npm i node-sass postcss-cli cssmin -D
+js build: npm i mustache uglify-js -D
+npm i onchange -D (for scripts that doesn't suport the -watch flag)
+
+
+
+"scripts":{
+	"test": "mocha /spec --require babel-register",
+	"test": run multiple scripts in series (if one fails, all stop): "npm run eslint && npm run stylelint && mocha..." or "npm-run-all eslint stylelint mocha" (need to install the npm-run-all package first)
+	"test": run multiple scripts in parallel): "npm run eslint & npm run stylelint & mocha..." - we could use "npm run eslint & npm run stylelint & mocha /spec --require babel-register --watch" to order mocha to watch for changes, but then it will keep watching after the script has finished (any change to a file will run mocha again). To prevent that, we can use "... & mocha /spec --require babel-register --watch & wait" to wait before the process exits, and then - ctrl + c will stop the process including Mocha's "watch".
+	or: "npm-run-all --parallel eslint stylelint mocha" (no need for & wait, because npm-run-all terminates the process in the end.)
+
+	"pretest": "" (runs before test script when using npm run test),
+	"posttest": "" (runs after test script when using npm run test)
+	"start": "node index.js",
+	//custom
+	"stylelint": "stylelint '**/*.scss' --syntax scss"
+	"eslint": "eslint --cache --fix"  // for global eslint. for local eslint:
+	"eslint": "./node_modules/.bin/eslint --cache --fix" or: "$(npm bin)/eslint ...." or: 
+		  since in npm's Path environment variable (npm run env | grep 'PATH') we can find all the local node_modules/.bin than we can use the "global" version (eslint --cache etc.) to run the local version!
+
+	"testing:js": "bla....",
+	"testing:css": "blabla...",
+	"run-all-testing": "npm-run-all testing:*" (needs installation of npm-run-all package),
+	"testing:fix:css": "blablabla....",
+	"run-all-testing2": "npm-run-all testing:**" (runs also colon sub-sub scripts),
+
+	"watch:test": "mocha spec/ --require babel-register --watch" (same as "test" script - but with a watch. see another version:)
+	"watch:test": "npm test -- --watch" (in this version no need to copy the "test" script into "watch:test" script. the first -- tells npm you want to pass additional parameters to the test script)
+
+	"build:html": "pug --obj data.json src/index.pug --out public/"  (uses the pug-cli dependency to build. data.obj is the input and index.pug is the template. public/ is the output directory.)
+	"build:css": "node-sass src/index.scss | postcss -c .postcssrc.json | cssmin > public/index.min.css" (use sass result as input to postcss (pipe). [postcss adds vendor prefixes.] use postcss as input to cssmin. output (>) cssmin result to a file - index.min.css)
+	"build:js": "mustachew data.json src/index.mustache.js | uglifyjs > public/index.min.js",
+	"build":"npm-run-all build:*",
+	"pre-build":"rm -rf public/" (remove last build results before re-build)
+
+	"watch:lint":"npm run lint -- --watch" -> doesn't work since lint doesn't support the watch flag. instead we can use:
+	"watch:lint":"onchange '**/*.js' '**/*.scss' -- npm run lint" (onchange ignores the node modules folder)
+	"watch": "npm-run-all --parallel watch:*"
+
+}: 
+
+
+
+
+https://egghead.io/lessons/tools-run-npm-scripts-when-files-change-with-onchange - 1:36

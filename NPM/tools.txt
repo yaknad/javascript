@@ -1,0 +1,11 @@
+Unit Testing:
+*************
+JASMINE - js tests library (newer than qunit). reuqires a runner, like Karama (or Chutzpah), but jasmine-node already have a built in runner. asyn tests suported from jasmine 2.x.
+          Has mocking support (vs. Sinon).
+MOCHA - JavaScript test framework (like Jasmine but supports async tests) running on Node.js (no need for browser here) and in the browser (in-browser -> vs. Karma, 
+        but it can also be used as a framework only, and let Karma do the running). Uses assretion libraries like Chai, should.js, expect.js, better-assert.js.
+KARMA - js unit tests runner. runs on all browsers, with all testing frameworks (jasmine, mocha etc.). get a report of tests run. supports CI servers. 
+        doesn't have a built in watcher support (?). doesn't have built in mocking support (use Sinon).
+SINON - mocking library for js testing frameworks. It also has a fake server capabilities.
+
+http://www.techtalkdc.com/which-javascript-test-library-should-you-use-qunit-vs-jasmine-vs-mocha/

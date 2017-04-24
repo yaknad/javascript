@@ -1,7 +1,7 @@
 {
   "name": "typescript-tests",
   "version": "1.0.0",
-  "description": "",
+  "description": "some typescript trials",
   "main": "index.js",
   "scripts": {
     "test": "karma start",
@@ -10,10 +10,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "eslint": "^3.19.0",
-    "typescript": "^2.2.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jasmine": "^2.5.47",
     "jasmine-core": "^2.5.2",
@@ -23,6 +20,7 @@
     "karma-webpack": "^2.0.3",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.2",
+    "eslint": "^3.19.0",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.4"
   }
