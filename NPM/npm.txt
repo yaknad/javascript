@@ -2,9 +2,9 @@ REFERENCES:
 ***********
 https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
 https://www.toptal.com/javascript/a-guide-to-npm-the-node-package-manager
-https://docs.npmjs.com/getting-started/installing-npm-packages-locally
 https://egghead.io/lessons/tools-run-npm-scripts-when-files-change-with-onchange - 1:36 (?)
-
+https://www.sitepoint.com/beginners-guide-node-package-manager/
+https://docs.npmjs.com/getting-started/using-a-package.json
 
 Commands:
 *********
@@ -12,8 +12,19 @@ npm install <package> --save (saves to the package.json)
 npm install <package> -D (saves to the Dev Dependencies in package.json)
 npm i <package> = npm install <package> 
 npm i <package> -D = npm install <package> and save it in package.json as dev dependency.
+
 npm init (create a package.json)
-npm init --force (creates package.json with default answers)
+npm init --force / npm init --yes / npm init --y (creates package.json with default answers)
+npm set init.author.email "wombat@npmjs.com" (example of setting a default value for npm init future uses)
+to create a custom default package.json for npm init command, change the ~/.npm-init.js script -
+{or: C:\Users\yaknad\AppData\Roaming\npm\node_modules\npm\node_modules\init-package-json\default-input.js}
+(in npm's home directory - get it by running: npm config get prefix) 
+to change the npm init questions, change the propmt function in  ~/.npm-init.js script.
+
+npm config list (shows some node's defaults)
+npm config ls -l (shows all node's defaults)
+
+
 npm run (runs all the scripts in the package.json)
 npm test (or "npm t" - run test script)
 npm start (runs the start script)
