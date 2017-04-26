@@ -1,3 +1,16 @@
+https://nodejs.org/api/
+http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js
+https://www.codeschool.com/courses/real-time-web-with-node-js
+https://www.tutorialspoint.com/nodejs/
+https://nodeschool.io/
+https://www.quora.com/What-are-the-best-resources-for-learning-Node-js
+{
+https://www.youtube.com/watch?v=gnsO8-xJ8rs
+https://www.youtube.com/watch?v=GJmFG4ffJZU
+https://www.youtube.com/watch?v=eqlZD21DME0
+https://www.youtube.com/watch?v=qmvxytWVBJ4
+}
+
 Working with file system
 Hands on movies lib
 

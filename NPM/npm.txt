@@ -5,7 +5,7 @@ https://www.toptal.com/javascript/a-guide-to-npm-the-node-package-manager
 https://egghead.io/lessons/tools-run-npm-scripts-when-files-change-with-onchange - 1:36 (?)
 https://www.sitepoint.com/beginners-guide-node-package-manager/
 https://docs.npmjs.com/getting-started/fixing-npm-permissions
-https://docs.npmjs.com/getting-started/creating-node-modules
+https://docs.npmjs.com/getting-started/publishing-npm-packages
 
 Global vs. Local install of packages
 *************************************
