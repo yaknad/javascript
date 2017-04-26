@@ -1,0 +1,34 @@
+Working with file system
+Hands on movies lib
+
+Express
+----------
+ Hello express
+ HTTP example
+ Middlewares
+ REST API
+
+Events & Async
+-----------------
+Events
+ Promises
+ Async package
+ Hands on
+
+
+Persistence
+-----------
+ MongoDB
+ Mongoose
+
+Socket.IO
+---------
+ Two way communication
+ Socket.IO
+ Building chat
+
+
+Building server
+----------------
+ HTTP
+ NET
