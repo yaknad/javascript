@@ -4,14 +4,28 @@ https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
 https://www.toptal.com/javascript/a-guide-to-npm-the-node-package-manager
 https://egghead.io/lessons/tools-run-npm-scripts-when-files-change-with-onchange - 1:36 (?)
 https://www.sitepoint.com/beginners-guide-node-package-manager/
-https://docs.npmjs.com/getting-started/using-a-package.json
+https://docs.npmjs.com/getting-started/fixing-npm-permissions
+https://docs.npmjs.com/getting-started/creating-node-modules
+
+Global vs. Local install of packages
+*************************************
+If you want to use it as a command line tool, something like the grunt CLI, 
+then you want to install it globally. 
+On the other hand, if you want to depend on the package from your own module using 
+something like Node's require command, then you want to install locally.
 
 Commands:
 *********
-npm install <package> --save (saves to the package.json)
+npm install [-g] <package> --save (saves to the package.json [-g] for global install)
 npm install <package> -D (saves to the Dev Dependencies in package.json)
 npm i <package> = npm install <package> 
 npm i <package> -D = npm install <package> and save it in package.json as dev dependency.
+npm update [-g] (updates all installed packages, according to package.json)
+npm outdated (tests if the installed packages are updated)
+npm outdated -g --depth=0 (depth required to avoid recursive update of inner node_modules?)
+npm uninstall [-g] <package>
+npm uninstall --save <package> 
+npm uninstall --save-dev <package>
 
 npm init (create a package.json)
 npm init --force / npm init --yes / npm init --y (creates package.json with default answers)
