@@ -5,7 +5,7 @@ https://www.toptal.com/javascript/a-guide-to-npm-the-node-package-manager
 https://egghead.io/lessons/tools-run-npm-scripts-when-files-change-with-onchange - 1:36 (?)
 https://www.sitepoint.com/beginners-guide-node-package-manager/
 https://docs.npmjs.com/getting-started/fixing-npm-permissions
-https://docs.npmjs.com/getting-started/publishing-npm-packages
+https://docs.npmjs.com/getting-started/scoped-packages
 
 Global vs. Local install of packages
 *************************************
@@ -56,6 +56,27 @@ html build: pug-cli
 css build: npm i node-sass postcss-cli cssmin -D
 js build: npm i mustache uglify-js -D
 npm i onchange -D (for scripts that doesn't suport the -watch flag)
+
+Semantic versioning (semver):
+*****************************
+As a publisher:
+start at 1.0.0
+Bug fixes and other minor changes: Patch release, increment the last number, e.g. 1.0.1
+New features which don't break existing features: Minor release, increment the middle number, e.g. 1.1.0
+Changes which break backwards compatibility: Major release, increment the first number, e.g. 2.0.0
+
+when updating a package, we use "npm version X" (to update the version in packge.json and add a tag to git repository) 
+and then "npm publish" to update the package in npm repository. In order to icrement automatically we can use "npm version patch", 
+"npm version minor" or "npm version major" and then "npm publish". 
+
+As a client:
+get patch releases: 1.0 or 1.0.x or ~1.0.4,
+Minor releases: 1 or 1.x or ^1.0.4,
+Major releases: * or x
+to get a version, use the above in pacjage.json or as "npm install lodash@1.0.x"
+
+see more in:
+https://docs.npmjs.com/misc/semver
 
 
 useful scripts:

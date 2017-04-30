@@ -9,3 +9,16 @@ KARMA - js unit tests runner. runs on all browsers, with all testing frameworks 
 SINON - mocking library for js testing frameworks. It also has a fake server capabilities.
 
 http://www.techtalkdc.com/which-javascript-test-library-should-you-use-qunit-vs-jasmine-vs-mocha/
+
+
+
+Build Cycle Tools:
+******************
+Grunt
+Gulp
+https://www.youtube.com/watch?v=LmdT2zhFmn4&list=PLv1YUP7gO_viROuRcGsDCNM-FUVgMYb_G
+
+Development System Tools
+************************
+NPM
+YARN
