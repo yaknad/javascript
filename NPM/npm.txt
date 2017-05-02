@@ -1,3 +1,6 @@
+stopped at:
+https://docs.npmjs.com/how-npm-works/packages
+
 REFERENCES:
 ***********
 https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/
@@ -5,7 +8,6 @@ https://www.toptal.com/javascript/a-guide-to-npm-the-node-package-manager
 https://egghead.io/lessons/tools-run-npm-scripts-when-files-change-with-onchange - 1:36 (?)
 https://www.sitepoint.com/beginners-guide-node-package-manager/
 https://docs.npmjs.com/getting-started/fixing-npm-permissions
-https://docs.npmjs.com/getting-started/scoped-packages
 
 Global vs. Local install of packages
 *************************************
@@ -34,10 +36,12 @@ to create a custom default package.json for npm init command, change the ~/.npm-
 {or: C:\Users\yaknad\AppData\Roaming\npm\node_modules\npm\node_modules\init-package-json\default-input.js}
 (in npm's home directory - get it by running: npm config get prefix) 
 to change the npm init questions, change the propmt function in  ~/.npm-init.js script.
+npm init --scope=username // to create a scoped package. It's a private package by default, unless using npm publish --access=public.
+to set a permanent scope, change the .npmrc file - "npm config set scope whatever"
 
 npm config list (shows some node's defaults)
 npm config ls -l (shows all node's defaults)
-
+npm publish --access=public //set the access option to "public" in the first time. It will be the default on subsequent publishes. A non-paid user may only publish public packages! 
 
 npm run (runs all the scripts in the package.json)
 npm test (or "npm t" - run test script)
