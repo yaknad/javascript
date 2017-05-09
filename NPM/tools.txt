@@ -1,17 +1,16 @@
 Unit Testing:
 *************
-* JASMINE - js tests library, reuqires a runner, like Karama. jasmine-node already have a built in runner. async tests suported from jasmine 2.x. Has mocking support (vs. Sinon).
+* JASMINE - js tests library, reuqires a runner, like Karama. jasmine-node already have a built in runner. 
+            Async tests suported from jasmine 2.x. Has mocking support (vs. Sinon).
 * MOCHA - JavaScript test framework (like Jasmine but supports async tests) running on both Node.js (no need for browser) and in the browser. 
-Has built-in runner (no need for karma), but it can also be used as a framework only, and let Karma do the running. 
-Uses assretion libraries like Chai, should.js, expect.js, better-assert.js.
+          Has built-in runner (no need for karma), but it can also be used as a framework only, and let Karma do the running. 
+          Uses assretion libraries like Chai, should.js, expect.js, better-assert.js.
 * KARMA - js unit tests runner. runs on all browsers, with all testing frameworks (jasmine, mocha etc.). get a report of tests run. 
-Supports CI servers. Doesn't have a built in watcher support (?). doesn't have built in mocking support (use Sinon).
-* SINON - mocking library for js testing frameworks. It also has a fake server capabilities.
+          Supports CI servers. Doesn't have a built in watcher support (?). doesn't have built in mocking support (use Sinon).
+* SINON - Mocking library for js testing frameworks. It also has a fake server capabilities.
 
 http://www.techtalkdc.com/which-javascript-test-library-should-you-use-qunit-vs-jasmine-vs-mocha/
-<<<<<<< HEAD
-
-
+https://sean.is/writing/client-side-testing-with-mocha-and-karma/
 
 Build Cycle Tools:
 ******************
@@ -23,6 +22,3 @@ Development System Tools
 ************************
 NPM
 YARN
-=======
-https://sean.is/writing/client-side-testing-with-mocha-and-karma/
->>>>>>> unit tests tools update
