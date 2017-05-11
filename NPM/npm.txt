@@ -1,5 +1,5 @@
 stopped at:
-https://docs.npmjs.com/how-npm-works/packages
+https://docs.npmjs.com/how-npm-works/npm3
 
 REFERENCES:
 ***********
@@ -53,6 +53,8 @@ npm config get prefix (get the home folder of npm - to which it installs globaly
 sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}  (changes owner of npm's home folders)
 see also: https://docs.npmjs.com/getting-started/fixing-npm-permissions
 
+tree - shows file tree schema
+npm ls [--depth=0] - shows the list of dependencies. depth=0 means showing only the prime generation of dependencies.
 
 useful dependencies:
 ********************
@@ -77,7 +79,7 @@ As a client:
 get patch releases: 1.0 or 1.0.x or ~1.0.4,
 Minor releases: 1 or 1.x or ^1.0.4,
 Major releases: * or x
-to get a version, use the above in pacjage.json or as "npm install lodash@1.0.x"
+to get a version, use the above in package.json or as "npm install lodash@1.0.x"
 
 see more in:
 https://docs.npmjs.com/misc/semver
