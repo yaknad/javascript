@@ -1,0 +1,30 @@
+<html>
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js"></script>
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.css">-->
+    <script src="app.js"></script>
+    <script src="js/controllers.js"></script>
+</head>
+
+<body ng-app='myApp'>
+    <div ng-controller="main">
+        <div> {{ location }}</div>
+        <div ui-view>
+
+        </div>
+        <hr>
+        <br>
+        <a href="#!/home">HOME</a>
+        <br>
+        <a href="#!/home/kitchen">KITCHEN</a>
+        <br>
+        <a href="#!/home/room">ROOM</a>
+        <br>
+    </div>
+</body>
+
+</html>
