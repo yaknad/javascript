@@ -60,6 +60,23 @@ npm ls [--depth=0] - shows the list of dependencies. depth=0 means showing only 
 
 npm dedupe - prevents module duplication (npm v3+), see: https://docs.npmjs.com/how-npm-works/npm3-dupe
 
+list all installed node packages:
+npm ls  (installed locally)
+npm ls -g   (instaled globally)
+
+update a package:
+npm update express
+
+search a package:
+npm search express
+
+register user to npm site:
+npm adduser
+
+publish module to npm:
+npm publish
+
+
 useful dependencies:
 ********************
 html build: pug-cli
