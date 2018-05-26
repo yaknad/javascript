@@ -39,7 +39,7 @@ to create a custom default package.json for npm init command, change the ~/.npm-
 (in npm's home directory - get it by running: npm config get prefix) 
 to change the npm init questions, change the propmt function in  ~/.npm-init.js script.
 npm init --scope=username // to create a scoped package. It's a private package by default, unless using npm publish --access=public.
-to set a permanent scope, change the .npmrc file - "npm config set scope whatever"
+to set a permanent scope, change the .npmrc file - "npm config set scope *whatever*"
 
 npm config list (shows some node's defaults)
 npm config ls -l (shows all node's defaults)
