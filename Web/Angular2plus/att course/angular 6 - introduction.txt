@@ -1,0 +1,240 @@
+use angular cli:
+ng --version
+ng new mayApp [--routing]
+ng serve [--host 0.0.0.0] [--port 4200]  // default host is localhost, default port is 4200
+
+
+
+--------------------
+
+Binding (one way binding):
+Property binding vs. Interpolation:
+Interpolation - in html use {{ X }}. The expression X will be converted to string. It's possible to use mathematical expressions like and calling functions in the @Component. You can't use =, +, -, new, ;
+It's possible to bind data from the component to a "src" attribute in a html tag (img etc.).
+
+Property Binding:
+<p [innerText]="componentData.field"></p>
+
+In interpolation we can build text that some of it is written in the html and part of it is ibded from the data (not possible in Property binding):
+<p> The student's name is {{ student.name }}</p>
+
+In Property binding, the binded value is not converted to string, and that's allows things like:
+<button [disabled]="isDisabled"> My Button </button>   
+while in Interpolation, since the value of "isDisabled" is converted to string, it will always be considered "truthy" and the button will not be disabled:
+<button disabled="{{isDisabled}}"> My button </button>
+
+------------
+
+Event Binding:
+1 way data binding from template to componenet:
+<button [disabled]="isDisabled" (click)="myButtonClicked($event, 12)"> My Button </button>  
+
+-------------
+Passing inputs to Components:
+(Generic vs. Child / hosted components:)
+in the component header, import the Input inerface from @angular/core:
+
+Import { Component, OnInit, Input... } from '@core/angular';
+
+@Component({
+	selector:'app-animal',
+	templateUrl: ...
+	styleUrls: [...]
+})
+export class AnimalComponent implements OnInit {.......
+
+and use it like this:
+@Input('the-animal')animal:any
+'the-animal' is the property we bind to when passing value to the component. You may omit the 'the-animal', and then you should bind to a property with a name like the field's name (in this case - 'animal').
+Use the selector header to enable instanciating an instance of the component via the selector (see above).
+
+In the app.componenet (main component) we decalre animals array.
+In the app.component template, we can use the generic animal component, and bind it different animals like this:
+<app-animal [the-animal]="animals[0]"></app-animal>
+app-animal is the components name (like directive), and it binds the animals[0] (from the array in the main component) to the "the-animal" property in the app-animal component
+
+
+----------------------------------
+
+Getting outputs from components:
+(to announce the hosting component about events that happend in the inner component)
+import the Output interface and EventEmitter class.
+usage 1:
+@Output("onLoad")  - binds the host componenet to the onLoad event of the child (current) component. (for native events?)
+@Output()statusUpdate:EventEmitter<any> = new EventEmitter()  -  the event name will be as the variable name (statusUpdate)
+to emit the event, use:
+this.statusUpdate.emit({ anything... })
+
+in the hosting component:
+
+<app-animal [the-animal]="animals[0]" (statusUpdate)="handleStatusUpdate($event)"></app-animal>
+
+
+----------------------------------
+
+ngFor:
+
+<app-animal *ngFor="let animal of animals" [the-animal]="animal" (statusUpdate)="handleStatusUpdate($event)"</app-animal>
+
+------------------------------
+
+Routing:
+- get around multiple componenets
+use angular cli with: ng new myApp --routing. it gives us:
+1. "routing" module, used for setting out routing - define routes. It imports Routes and RouterModule from @angular/router.
+Routes is a type that is expected to be an array of route objects. RouterModule exposes functions we need for registring routes.
+
+The routing module looks like this:
+
+import { NgModule } from @angular/core;
+import { Routes, RouterModule } from @angular/router;
+import { HomeComponent } from './home/home.component';
+import { SportsComponent } from '...'
+....
+
+const routes: Routes = [
+	{ path: 'home', component: HomeComponent },
+	{ path: 'sports', component: SportsComponent }
+]
+
+@NgModule({
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+in the AppModule:
+we declare/import all the application's modules:
+
+import { AppRoutingModule } from './app-routing.module';
+
+@NgModule({
+	declarations: [
+		AppComponent,
+		HomeComponenet, 
+		AnimalComponent.....
+	],
+	imports: [
+		BrowseModule,
+		AppRoutingModule,
+		MyHeaderModule
+	],
+	providers: [],
+	bootstrap [AppComponent]
+})
+export class AppModule { }
+
+
+to use the routs we registered:
+
+<a routerLink='/home' routerLinkActive='active'> Go home </a>
+<router-outlet></router-outlet>
+
+Note that we don't need to use the href attribute (or the # in the href value) since we use Angular's "routerLink" directive.
+The router-outlet element is making this component (the ine that this element is in it's html template), a "routing component" or a component able displaying ither component that where routed to. When a component is routed to, it's going to be rendered below the "router-outlet" element. If we don't include this element anywhere, Angular will not be able to do routing and crash. { note the "bootstrap" property in the AppModule - the router-outlet will be in the AppComponent - the one that is bootstrapped first. }
+
+
+
+In a component, we can get the router as a parameter to the constructor:
+
+import { Router } from @angular/router;
+
+@Component({ ... })
+export class SportsComponent implements OnInit {
+
+	constructor(private router:Router) {}   // dependency injection
+
+	handleClick(name){
+		this.router.navigateByUrl(`/sport/${name}`)
+	}	
+}
+
+to use a routes with multiple parameters, we should register them (in the routing module) like this:
+
+const routes: Routes = [
+	{ path: 'home', component: HomeComponent },
+	{ path: 'sports', component: SportsComponent }
+	{ path: 'sports/:name', component: SportDetailComponent }
+]
+
+To be able to get the extra route params in the SportDetailComponent, it should lool like this:
+
+import { ActivetedRoute, ParamMap } from '@angular/router';
+
+@Componenet ({...})
+export class SportDetailComponent implements OnInit{
+
+	constructor(private route:ActivetdRoute) {}   // ActivetedRoutes supply information about the route that brought us to this component
+
+	ngOnInit() {
+		let name = this.route.snapshot.paramMap.get('name'); // paramMap - see explanation->
+		this.getSportByName(name);	
+	}
+}
+
+paramMap is an observable that we can register to and continueously get updates from.
+
+
+----------------------
+
+Understanding Schematics:
+************************
+workflow tool for transforming projects. example: create components, fix breaking changes etc.
+for example, AngularCLI's command ng generate directive is actually refering to a schematic to be executed.
+We may create custom schematic to be used vuia angular CLI. We don't perform actions on the file system directly.
+We define transformations to be applied on a tree. The tree is a set of files (directory like) combined with the set of changes to be applied to those files.
+
+"Collections" define sets of named schematics that can be published and installed by users. The existing schmatics in angular CLI are defined in the @schematics/angular collection.
+
+Define a Rule Factory function that returns a "Rule". Rule is a function that get a tree and return a tree (with modifications). These rules can be chained!
+existing schematics in Angular CLI:
+ng new, ng generate (for directives, components and services), ng add (can add many types of elements: support for Angular mterial, progressive web apps, Angular elements etc.), ng update (updates to the latest version of angular, updating dependencies and making required changes).
+
+
+creating a schematic:
+********************
+installing the schematics command line interface:
+npm install -g @angular-devkit/schematics-cli
+
+create a new schematic projects:
+schematics blank --name=my-new-component
+
+note the collection.json that contains the definition of the new schematic. It also points to the Rule Factory function that creates the schematic in our code.
+The function looks like (the name matches the name of the schematic):
+import { Rule, SchematicContext, Tree} from @angular-devkit/schematics;
+
+export function myNewComponent(options: any): Rule {
+	return (tree: Tree, _context: SchematicContext) => {
+		.... change tree .....
+		return tree;
+	}
+}
+the options argument will be ssent by angularCli, if we use it to run the schematic, or by another schematic that calls this schematic, since they are pipeable.
+the factory retuerns a function that gets a tree (+ context) and returns a (modified) tree. When running the schematic with angularCLI, the tree will represent the angular project's folder. The tree is not only a files directory, but also contains metadata about changes that need to be made on the files.
+An exmample command we can use in the Rule factory method (to change the tree) is:
+
+tree.create(options.name || 'hello', 'this is a line from the schematic')
+
+It creates a file, getting it's name from the command line paramter "options.name", or, if absent, uses the name "hello". The content of the file is the text 'this is a line from the schematic.
+
+Now there're 2 steps required to use the schematic
+1. build the schematic (from typescript file to js).
+2. use it.
+in the package.json file, we may define a "build-and-(dry-)run" script that does both of them - build + run:
+tsc -p tsconfig.json && schematics .:my-new-component --name=my-file [--dry-run=false]   // (the my-file parameter is for the options.name param we used in the tree.create command above.)
+It runs in debug mode and running in dry-run mode -not creating any file. In order to cancel the dev mode, we should add the parameter --dry-run=false.
+
+Using schematic in an Angular project via angular CLI:
+******************************************************
+inside the project's folder, type:
+npm install ../my-new-component   // the path from the porject to the custom schematic folder
+and then use angular CLI:
+ng generate my-new-component:my-new-component --name=randomFileName
+
+
+-------------------------------
+
+Remarks:
+Componemt = angularJs directive
