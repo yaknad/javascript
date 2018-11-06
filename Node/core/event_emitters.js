@@ -34,28 +34,38 @@ console.log("Program Ended.");
 // Note that event emitters .emit doesn't register the 
 //      event handler to the task queue! (it doesn't use the "event loop" at all)
 //      Instead, all registered handlers run synchronously when the event is emitted!
+//      It's like browser's javascript when triggering am event from js code - like element.click(),
+//      or when dispatching an event programmatically, all the handlers are called synchrnously - just like
+//      calling the handler functions explicitly. They are not registered to the "task queue" to be called b
+//      the "event loop". Note that even if a "micro task" (like aresolved promise) is waiting in the
+//      "micro tasks queue" (that has proirity over the regular "task queue"), still the handlers will
+//      run before the "micro task", since they are called synchronously by the running function and 
+//      not registered to the tasks queue.
 //      See: https://github.com/nodejs/node-v0.x-archive/issues/8470
 //           https://medium.com/technoetics/node-js-event-emitter-explained-d4f7fd141a1a
 //
 
 // In order to run the handlers async, use one of the following:
 eventEmitter.on("event1", function(a, b, c) {
+    // like browser javascript's setTimeout(function, 0);
     setImmediate(() => console.log("This callback is called async by the event loop when its turn has arrived. " +
         "It was called with the following params: a=" + a + ", b=" + b + ", c=" + c));
 });
 eventEmitter.on("event1", function(a, b, c) {
+    // like borwser javascript's promise.resolve().then(function) - enters the "micro tasks queue" and 
+    // performed before the regular tasks in the "tasks queue".
     process.nextTick(() => console.log("This callback is called async before the event loop queue. " +
         "It was called with the following params: a=" + a + ", b=" + b + ", c=" + c));
 });
 eventEmitter.on("event1", function(a, b, c) {
-    console.log("This callback is called synch - not async!");
+    console.log("This callback is called sync - not async!");
 });
 
 eventEmitter.emit("event1", "aaa", "bbb", "ccc");
 
 /*
  Output:
- This callback is called synch - not async!
+ This callback is called sync - not async!
  This callback is called async before the event loop queue. It was called with the following params: a=aaa, b=bbb, c=ccc
  This callback is called async by the event loop when its turn has arrived. It was called with the following params: a=aaa, b=bbb, c=ccc
 */
