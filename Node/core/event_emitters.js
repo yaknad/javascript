@@ -78,3 +78,22 @@ eventEmitter.emit("event1", "aaa", "bbb", "ccc");
 
 eventEmitter.once("event1", () => console.log("eventEmitter.once will call the callback only on the first time" +
     "the event is fired. eventEmitter.on will call the callback anytime the event is fired."));
+
+
+
+var eventEmitter2 = new events.EventEmitter();
+var eventEmitter3 = new events.EventEmitter();
+eventEmitter2.on("customEvent2", function() { console.log('eventEmitter2.customEvent2'); });
+eventEmitter2.on("customEvent3", function() { console.log('eventEmitter2.customEvent3'); });
+eventEmitter3.on("customEvent2", function() { console.log('eventEmitter3.customEvent2'); });
+eventEmitter3.on("customEvent3", function() { console.log('eventEmitter3.customEvent3'); });
+eventEmitter2.emit('customEvent2');
+// will call only the handlers registered to 'customEvent2' event on eventEmitter2 - not on customEvent3!
+// just like the "click" event of a specific button doesn't call the handlers that are registered to "click" on another button. 
+
+
+
+// MORE ABOUT EVENT EMITTERS:
+// 1. When an EventEmitter instance faces any error, it emits an 'error' event. 
+// 2. When a new listener is added, 'newListener' event is fired and when a listener is removed, 'removeListener' event is fired.
+// 3.

@@ -47,3 +47,17 @@ Building server
 ----------------
  HTTP
  NET
+
+Misc.
+-----
+Nodemon for Autorestarts
+Using the Debugger
+Restarting the Debugger Automatically After Editing our App
+Debugging Node.js in Visual Studio Code
+Changing Variables in the Debug Console
+
+Pug - creating dynamic html pages (with Express).
+Handlebars
+EJS
+
+https://www.udemy.com/nodejs-the-complete-guide/?deal_code=1811UDEMYBASICS&utm_source=email-Adhoc&utm_campaign=2018-11-08_._cn_UBNOV_._en_TOP7D_._us_AllAlltl_LC_._tg_n_.__._la_en_._rn_2018-11-08_._&utm_medium=2018-11-08_UBNOV_TOP7D_AllAll_LC_n&utm_content=udemy.15126685&data_h=BEIfcVdVQHw=&utm_term=TOP7D_CAT_SUBCAT_OVERALL_2A
