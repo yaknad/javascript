@@ -1,0 +1,15 @@
+Questions
+*********
+1) interfaces vs. classes?
+2) interface with functions (instead of properties)?
+3) + Angular / React: https://www.typescriptlang.org/samples/index.html
+https://github.com/Microsoft/TypeScriptSamples/
+4) http://browserify.org/
+5)
+
+Stopped at:
+https://www.typescriptlang.org/docs/handbook/gulp.html
+"Install our dependencies"
+
+Points
+******

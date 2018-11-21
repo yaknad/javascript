@@ -1,0 +1,10 @@
+{
+  "name": "typescript-trial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "greeter.ts",
+  "scripts": {
+        
+  },
+  "author": ""
+}
