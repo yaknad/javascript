@@ -9,7 +9,8 @@ https://github.com/Microsoft/TypeScriptSamples/
 
 Stopped at:
 https://www.typescriptlang.org/docs/handbook/gulp.html
-"Install our dependencies"
+"Watchify, Babel, and Uglify"
 
 Points
 ******
+1. gulp: The dependency syntax in the example is incorrect for the new gulp versions. See the way I wrote it. 
