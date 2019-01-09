@@ -3,8 +3,15 @@
         "src/main.ts",
         "src/greet.ts"
     ],
+    // "compilerOptions": {
+    //     "noImplicitAny": true,
+    //     "target": "es5"
+    // }
+
+    // THIS is for creating ES2015 output js from the ts files. Than we Babelify it to ES5 (see gulpfile.js)
+
     "compilerOptions": {
         "noImplicitAny": true,
-        "target": "es5"
+        "target": "es2015"
     }
 }
