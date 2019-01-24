@@ -11,6 +11,8 @@ var paths = {
     pages: ['src/*.html']
 };
 
+//!!! NOTE: when using "tsify" / "gulp-typescript" instead of compiling with ts.exe, you will not see the compile error logs!!!
+
 var watchedBrowserify = watchify(browserify({
     basedir: '.',
     debug: true,  // !!! adds source maps (to the original node/typescript code) inside the bundle.js file, but when using uglify, we need another plugin for sourcemaps - see later!!!
