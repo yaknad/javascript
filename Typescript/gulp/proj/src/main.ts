@@ -1,3 +1,6 @@
+// ****************** Chapter 1: Basic Types ***************** 
+
+
 // ---------- Quick overview ----------
 
 import { sayHello } from "./greet"; // needs browserify to convert to "require" syntax
@@ -98,3 +101,85 @@ let color_2: string = Colors[0]; // Red --> Note the type is string, not Color! 
 color_2 = Colors2[1]; // Red
 color_2 = Colors3[4]; // Blue
 let color_3 : Colors = Colors["Red"]; // Note the type is Color (not like in color_2 above)
+
+
+
+let unknown : any = "any";
+unknown = 12;
+unknown = true;
+unknown.getSomething(); // "any" may be anything, so it may have any method (like "getSomething")
+
+let obj : Object = "any";
+obj = 12;
+obj = true;
+// obj.getSomething(); - Error: on "object" we may call only "object"'s methods
+// SEE LATER more about "Object"
+
+let listAny : any[] = [1, true, "any"];
+listAny[1] = 2;
+
+function returnsNothing() : void {
+    console.log("return nothing!");
+}
+
+let voidVariable : void = undefined;
+voidVariable = null;
+// voidVariable = new Object(); - void variable may be assigned only undefined or null values!
+let nullVariable : null = null; // null type may be assigned only null as value
+let undefinedVariable : undefined = undefined; // undefined type may be assigned only undefined as value
+let number1 : number = null;
+number1 = undefined; // null and undefined are subtypes of all other types, besides being a type of their own (like seen before), 
+                     // and therefore may be assigned as values to all types, unless when using the --strictNullChecks flag 
+                     // that enforces using null and undeifined values only to void, null, undefined types. Using this flag prevents 
+                     // many unexpected errors (but backward compatibility with old javascript is problematic)
+
+
+// Function returning never must have unreachable end point
+function error(message: string) : never {
+    throw new Error(message);
+}
+
+// Inferred return type is never
+function fail() : never { 
+    return error("error!");
+}
+
+function neverReturns() : never {
+    while(true){
+    }
+}
+
+function voider() : void {
+
+}
+
+let neverVariable: never = error("error!!!");
+// neverVariable = 10;     
+// neverVariable = voider();      // never type can be assigned only a never value - not even any, void, undefined or null
+let neverNumber : number = error("error!!!!!!"); // never value may be assigned to all types (as with null and undefined)
+
+
+
+// Object is a type that represents the non-primitive type, i.e. any thing that is not
+// number, string, boolean, symbol, null, or undefined.
+
+// Type assertions - or Casts
+let anyValue : any = "this is actually a string!";
+let stringValue : number = anyValue; // ***** NOTE : that the compiler agrees with this!!!
+let strLength : number = anyValue.length; // Also possible
+// strLength = (<string>anyValue;    // casting - Compile Error!!!
+strLength = (<string>anyValue).length;  // form #1
+strLength = (anyValue as string).length;  // form #2
+
+
+
+
+
+
+
+
+
+// **************** Chapter 2: Variable Declarations ****************
+// see javascript.Core.ES2015.js
+
+
