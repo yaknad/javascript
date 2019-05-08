@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--  lang="en-US" - for screen readers etc. -->
+
+<head>
+  <title>HTML Tutorial</title>
+
+  <style>
+    table {
+      width: 100%;
+    }
+    
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    
+    th,
+    td {
+      padding: 15px;
+      text-align: left;
+    }
+    
+    table#t01 tr:nth-child(even) {
+      background-color: #eee;
+    }
+    
+    table#t01 tr:nth-child(odd) {
+      background-color: #fff;
+    }
+    
+    table#t01 th {
+      background-color: black;
+      color: white;
+    }
+    
+    /* WRONG! */
+    #navMenu {
+      height: 30pt;
+      list-style-type: none;
+      text-align: center;
+      padding-left: 5pt;
+      padding-top: 5pt;
+      background-color: #333333;
+      /* padding-bottom: 5pt; */
+    }
+    
+    #navMenu li {
+      padding-right: 10pt;
+      color: white;
+      float: left;
+    }
+    
+    #navMenu li:hover {
+      color: red;
+      background-color: #111111;
+    }
+
+    /* CORRECT */
+    #otherNavMenu {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333333;
+    }
+    
+    #otherNavMenu li {
+      float: left;
+    }
+    
+    #otherNavMenu li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 16px;
+      text-decoration: none;
+    }
+    
+    #otherNavMenu li a:hover {
+      background-color: #111111;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h2>Navigation Menu #1</h2>
+  <ul id="navMenu">
+    <li>Home</li>
+    <li>News</li>
+    <li>Contact</li>
+    <li>About</li>
+  </ul>
+
+  <br>
+
+  <h2>Navigation Menu #2</h2>
+  <ul id="otherNavMenu">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+
+  <br>
+  <br>
+  
+  <h1 title="I'm a header">This is a Heading</h1>
+  <p title="I'm a tooltip">This is a paragraph.</p>
+  <ul>
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+  </ul>
+  <ol>
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Milk</li>
+  </ol>
+  <hr />
+  <pre>
+        My Bonnie lies over the ocean.
+      
+        My Bonnie lies over the sea.
+      
+        My Bonnie lies over the ocean.
+      
+        Oh, bring back my Bonnie to me.
+    </pre>
+  <p>
+    My Bonnie lies over the ocean. My Bonnie lies over the sea. My Bonnie lies over the ocean. Oh, bring back my Bonnie to me.
+  </p>
+  <p>
+    My Bonnie lies over the ocean.
+    <br> My Bonnie lies over the sea.
+    <br> My Bonnie lies over the ocean.
+    <br> Oh, bring back my Bonnie to me.
+  </p>
+  <p>
+    HTML colors: RGB(A) vs HSL(A) vs HEX - see: https://www.w3schools.com/html/html_colors.asp
+  </p>
+  <img src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg" alt="Heaven's beach" />
+  <img src="http://static.digg.com/images/d6173d21467e4c5aa7179e14f2414278_371e99f4471f48d0bbcb0c905ae1bcac_header.jpeg" alt="Space view" />
+  <img src="https://junkmailimages.blob.core.windows.net/large/db2a2df4c52c42638aa4ba2689979dcf.jpg" alt="Ice cubes" />
+
+  <br>
+  <br>
+  <br> Pictures (Html5): resize the browsr to see the image changes.
+  <picture>
+    <source media="(min-width: 650px)" srcset="https://www.w3schools.com/html/img_pink_flowers.jpg">
+    <source media="(min-width: 465px)" srcset="https://www.w3schools.com/html/img_white_flower.jpg">
+    <img src="https://www.w3schools.com/html/img_orange_flowers.jpg" alt="Flowers" style="width:auto;">
+  </picture>
+  <br>
+  <br>
+  <br>
+  <table id="t01">
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Age</th>
+    </tr>
+    <tr>
+      <td>Jill</td>
+      <td>Smith</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <td>Eve</td>
+      <td>Jackson</td>
+      <td>94</td>
+    </tr>
+    <tr>
+      <td>John</td>
+      <td>Doe</td>
+      <td>80</td>
+    </tr>
+  </table>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- https://medium.com/youstart-labs/beginners-guide-to-choose-between-css-grid-and-flexbox-783005dd2412 -->

@@ -107,7 +107,7 @@ let color_3 : Colors = Colors["Red"]; // Note the type is Color (not like in col
 let unknown : any = "any";
 unknown = 12;
 unknown = true;
-unknown.getSomething(); // "any" may be anything, so it may have any method (like "getSomething")
+// unknown.getSomething(); // "any" may be anything, so it may have any method (like "getSomething")
 
 let obj : Object = "any";
 obj = 12;
@@ -181,5 +181,5 @@ strLength = (anyValue as string).length;  // form #2
 
 // **************** Chapter 2: Variable Declarations ****************
 // see javascript.Core.ES2015.js
-
+ 
 
