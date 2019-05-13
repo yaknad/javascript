@@ -149,5 +149,53 @@ const SkiDayCounter = ({ total, powder, backcountry, goal}) => {
   document.getElementById('root3')
 );
 
+let bookList = [
+  {"title": "The Sun Also Rises", "author": "Ernest Hemingway", "pages":"260"},
+  {"title": "Home and Away", "author": "Auzie", "pages":"159"},
+  {"title": "Ulisses", "author": "Boring Guy", "pages":"1260"}
+];
 
-// Stopped at Chapter 4.
+const Book = ({title, author, pages}) => {
+  return(
+  <section>
+    <h2>{title}</h2>
+    <p>by: {author}</p>
+    <p>pages: {pages} pages</p>
+  </section>
+  );
+}
+
+// const Library = () => {
+//   return(
+//     <section>
+//       <hr/>
+//       <div>Welcome to the Library</div>
+//       <Book title="The Sun Also Rises" author="Ernest Hemingway" pages={260}></Book>
+//       <Book title="Home and Away" author="Auzie" pages={159}></Book>
+//       <Book title="Ulisses" author="Boring Guy" pages={1260}></Book>
+//       <hr/>
+//     </section>
+//   );
+// }
+
+// /*ReactDOM.*/render(
+//   <Library/>, 
+//   document.getElementById('root4')
+// );
+
+const Library = ({books}) => {
+  return(
+    <section>
+        {books.map(
+           book => <Book title={book.title} author={book.author} pages={book.pages}></Book>
+        )}    
+    </section>
+  );
+}
+
+
+
+/*ReactDOM.*/render(
+  <Library books={bookList}/>, 
+  document.getElementById('root4')
+);
