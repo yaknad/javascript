@@ -67,18 +67,26 @@ const ul = React.createElement('ul',
 // );
 
 let globalMinutes = 0;
-setTimeout(()=>{
+setInterval(()=>{
   globalMinutes++;
 }, 3000);
 
 class Message extends Component {
+
+    constructor(props){
+        super(props);
+        this.localMinutes = 0;
+        this.timeout = setInterval(()=>{this.localMinutes++;}, 3000);
+    }
+
     render(){
       console.log(this.props);
       return (
         <div>
           <h1 style={{color: this.props.color}}>{this.props.msg}</h1>
           <p>I'll check back in {this.props.minutes} minutes</p>
-          <p>or in {globalMinutes} minutes - THIS IS NOT REFRESHING (one way binding!)</p>  
+          <p>or in {globalMinutes} minutes - THIS IS NOT REFRESHING (it is not binded. Should use the state for binding! See later in the Library????)</p> 
+          <p>or in {this.localMinutes} minutes - THIS IS NOT REFRESHING (it is not binded. Should use the state for binding! See later in the Library????)</p>  
         </div>
       )
     }
@@ -155,12 +163,13 @@ let bookList = [
   {"title": "Ulisses", "author": "Boring Guy", "pages":"1260"}
 ];
 
-const Book = ({title, author, pages}) => {
+const Book = ({title, author, pages, freeBookMark}) => {
   return(
   <section>
     <h2>{title}</h2>
     <p>by: {author}</p>
     <p>pages: {pages} pages</p>
+    <p>Free Bookmark Today: {freeBookMark ? 'yes!' : 'no!'}</p>
   </section>
   );
 }
@@ -183,19 +192,184 @@ const Book = ({title, author, pages}) => {
 //   document.getElementById('root4')
 // );
 
-const Library = ({books}) => {
-  return(
-    <section>
-        {books.map(
-           book => <Book title={book.title} author={book.author} pages={book.pages}></Book>
-        )}    
-    </section>
-  );
+// const Library = ({books}) => {
+//   return(
+//     <section>
+//       <hr/>
+//       <div>Current number of books: {books.length}</div>
+//       <br/>        
+//         {books.map(
+//            (book, i) => 
+//                 <div key={i}> 
+//                   <hr/>
+//                   <Book                         
+//                         title={book.title} 
+//                         author={book.author} 
+//                         pages={book.pages}>
+//                   </Book>
+                  
+//                 </div>
+//         )}    
+//     </section>
+//   );
+// }
+
+
+const Hiring = () =>
+  <div>
+    <p>The Library is hiring. Go to www.library.com/jobs for more.</p>
+  </div>
+
+const NotHiring = () =>
+  <div>
+    <p>The Library is not hiring. Check again later.</p>
+  </div>
+
+class Library extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    // we may declare this member outside the constructor - it's still an instance member - see later Class and prototype trials 
+    // IMPORTANT: keep the state at the root (even state that is required for the children!) "Source of Truth!"
+    this.state = {
+      open: true,
+      seconds: 0,
+      freeBookMark: true,
+      hiring: true
+    };
+
+    // we may replace this with the version 2 of toggleOpenClosed (arrow functions automatically bind the current "this" to the function!!!)
+    this.toggleOpenClosed = this.toggleOpenClosed.bind(this);
+  
+    this.interval = setInterval(()=> {
+      // console.log(this.state.seconds);
+      this.setState(prevState => ({
+        // open: this.state.open,
+        seconds: ++prevState.seconds
+      }))
+    }, 1000);
+  }
+
+  // version 1:
+  toggleOpenClosed() {
+
+    // Why the usage of "this" requires the "bind" in the constructor?
+    // this should be recognize as in any prototype's function refereing the current "this"
+    // AS it works in "render" method???
+    // ANSWER: when the calling context is a Library instance, it does recognize it.
+    // the problem is with external code calling this method directly (not throught the instance.toggleOpenClosed()).
+    // that's what is happening when the rendered dom is calling the toggleOpenClosed.
+
+    // version 1: set by sending a new state object
+    // this.setState({
+    //   open: !this.state.open
+    // });
+
+    // version 2: send a callback function that sets the new state
+    this.setState(prevState => ({
+      open: !prevState.open
+    }));
+
+  }
+
+  // version 2: doesn't require binding (see explanation above in the constructor)
+  // toggleOpenClosed = () => {
+  //   this.setState(prevState => ({
+  //     open: !prevState.open
+  //   }));
+  // }
+
+  render() {
+    
+    // const books = this.props.books;
+    const { books } = this.props;
+
+    return(
+      <section>
+        <hr/>
+        {this.state.hiring ? <Hiring/> : <NotHiring/>}
+        <hr/>
+        <div>Current number of books: {books.length}</div>
+        <br/>
+        <div>The library is: { this.state.open ? 'open' : 'closed' }</div>
+        <br/>        
+        <div>You're already: { this.state.seconds } seconds in the library</div>
+        <br/>        
+        <button onClick={this.toggleOpenClosed}>Change</button>   
+        <br/>
+          {books.map(
+             (book, i) => 
+                  <div key={i}> 
+                    <hr/>
+                    <Book                         
+                          title={book.title} 
+                          author={book.author} 
+                          pages={book.pages}
+                          freeBookMark={this.state.freeBookMark}> //this is passed to the Book child as props!!
+                    </Book>                    
+                  </div>
+          )} 
+          
+      </section>
+    );
+  }
 }
-
-
 
 /*ReactDOM.*/render(
   <Library books={bookList}/>, 
   document.getElementById('root4')
 );
+
+
+//*************************** prototype and class trials ****************************************************/
+
+let childClass = function() {
+  
+  this.state = { open: true }
+}
+
+childClass.prototype = {
+  printState: function() {
+    console.log(this.state);
+    console.log('my constructor: ' + this.constructor); // the prototype's constructor (?)
+  }
+}
+
+let child1 = new childClass();
+child1.printState();
+
+class childClass2 {
+
+  // NOTE that state2 is considered an instance member and not a "class" (prototype) member. It's not part of the prototype! See later!
+  state2 = { open: true }
+
+  constructor() {
+    this.state = { open: true };
+  }
+
+  printState() {
+    console.log("state: " + this.state.open);
+    console.log("state2: " + this.state2.open);
+    console.log("*********");
+    // console.log('my constructor: ' + this.constructor); // here it's the constructor is the current instance's constructor, i.e this class - not the prototype's constructor 
+  }
+}
+
+let child2 = new childClass2();
+let child2a = new childClass2();
+child2.printState();
+child2.state2.open = false;
+child2.printState();
+child2a.printState();
+
+// TODO: NOTE that state2 is considered an instance member and not a "class" (prototype) member. It's not part of the prototype!
+// childClass2.state2.open = "unknown?";  
+// child2.printState();
+// child2a.printState();
+// TODO: when we print the prototype we will not find there state2!
+console.log(childClass2.prototype);
+// TODO: but the functions does go to the prototype, and changing them will change the function in the instances!
+childClass2.prototype.printState = null;
+console.log(child2);
+console.log(child2a);
