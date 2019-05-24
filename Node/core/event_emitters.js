@@ -34,10 +34,10 @@ console.log("Program Ended.");
 // Note that event emitters .emit doesn't register the 
 //      event handler to the task queue! (it doesn't use the "event loop" at all)
 //      Instead, all registered handlers run synchronously when the event is emitted!
-//      It's like browser's javascript when triggering am event from js code - like element.click(),
+//      It's like browser's javascript when triggering an event from js code - like element.click(),
 //      or when dispatching an event programmatically, all the handlers are called synchrnously - just like
-//      calling the handler functions explicitly. They are not registered to the "task queue" to be called b
-//      the "event loop". Note that even if a "micro task" (like aresolved promise) is waiting in the
+//      calling the handler functions explicitly. They are not registered to the "task queue" to be called by
+//      the "event loop". Note that even if a "micro task" (like a resolved promise) is waiting in the
 //      "micro tasks queue" (that has proirity over the regular "task queue"), still the handlers will
 //      run before the "micro task", since they are called synchronously by the running function and 
 //      not registered to the tasks queue.
