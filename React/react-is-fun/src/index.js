@@ -13,7 +13,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 // import React from 'react';
-// import ReactDOM from 'react-dom';
 
 var style = {
     backgroundColor: 'orange',
@@ -239,7 +238,7 @@ class Library extends React.Component {
       hiring: true
     };
 
-    // we may replace this with the version 2 of toggleOpenClosed (arrow functions automatically bind the current "this" to the function!!!)
+    // we may replace this with the version #2 of toggleOpenClosed (arrow functions automatically bind the current "this" to the function!!!)
     this.toggleOpenClosed = this.toggleOpenClosed.bind(this);
   
     this.interval = setInterval(()=> {
@@ -251,29 +250,37 @@ class Library extends React.Component {
     }, 1000);
   }
 
-  // version 1:
+  // version #1:
   toggleOpenClosed() {
 
-    // Why the usage of "this" requires the "bind" in the constructor?
-    // this should be recognize as in any prototype's function refereing the current "this"
+    // Why the usage of "this" requires the "bind" in the constructor (see this.toggleOpenClosed block in the constructor above)?
+    // this should be recognized as in any prototype's function refereing the current "this"
     // AS it works in "render" method???
     // ANSWER: when the calling context is a Library instance, it does recognize it.
     // the problem is with external code calling this method directly (not throught the instance.toggleOpenClosed()).
     // that's what is happening when the rendered dom is calling the toggleOpenClosed.
+    // see: https://medium.com/@vijay.j.shekhawat/javascript-why-var-self-this-bbbaf98ab9d9
 
-    // version 1: set by sending a new state object
+    // BUT HOW does "render" does work? (as explained later, arrow functions bind "this"
+    // in compile time, but "render" is not always an arrow function - see later examples?)
+    // ANSWER: it is always used in the context of the component (from within the component),
+    // and therefore the "this" is the component, but toggleOpenClosed is "returned"/binded to the dom object
+    // and is called on the dom object, and the "this" is now the dom object. If the "render" 
+    // func would have been used the same, it would have caused the same problem.
+
+    // version 1.1: set by sending a new state object
     // this.setState({
     //   open: !this.state.open
     // });
 
-    // version 2: send a callback function that sets the new state
+    // version 1.2: send a callback function that sets the new state (it gets the existing state as a parameter)
     this.setState(prevState => ({
       open: !prevState.open
     }));
 
   }
 
-  // version 2: doesn't require binding (see explanation above in the constructor)
+  // version #2: doesn't require binding (see explanation above in the constructor)
   // toggleOpenClosed = () => {
   //   this.setState(prevState => ({
   //     open: !prevState.open
@@ -324,46 +331,68 @@ class Library extends React.Component {
 
 //*************************** prototype and class trials ****************************************************/
 
+
 let childClass = function() {
   
   this.state = { open: true }
+  this.protoPrintState = function(name) {
+    this.printState(name + " from protoPrintState"); // NOTE: this will work although "printState"
+    // is declared later in the prototype, since eventually, the instance does have such a function as a member (inherited from the prototype)
+  }
 }
 
 childClass.prototype = {
-  printState: function() {
+  printState: function(name) {
+    console.log("name: " + name);
     console.log(this.state);
-    console.log('my constructor: ' + this.constructor); // the prototype's constructor (?)
+    console.log('my constructor: ' + this.constructor); // see comment regarding this - when using this function
   }
 }
 
 let child1 = new childClass();
-child1.printState();
+console.log(child1.constructor); // prints "child" function - as expected.
+child1.printState("child1"); // this prints the Object function as the constructor (it's the prototype's constructor).
+// why isn't it the childClass function - like in "child1.constructor"?
+// ANSWER: when there's a prototype - it will always give the prototype's constructor!!!
+// NOTE: adding prototype after instansiating an instance will not affect existing instances - only ne once,
+// but adding members to existing prototype will affect also the existing instances (that already reference this prototype).
+
+child1.protoPrintState("child1");
+
+//--------
 
 class childClass2 {
 
-  // NOTE that state2 is considered an instance member and not a "class" (prototype) member. It's not part of the prototype! See later!
+  // NOTE that state2 is considered an instance member and not a "class" (prototype?) member and 
+  // it's not part of the prototype! See later - although it was not declared as "this.state2"!
   state2 = { open: true }
 
   constructor() {
     this.state = { open: true };
   }
 
-  printState() {
+  printState(name) {
+    console.log(name);
     console.log("state: " + this.state.open);
     console.log("state2: " + this.state2.open);
     console.log("*********");
-    // console.log('my constructor: ' + this.constructor); // here it's the constructor is the current instance's constructor, i.e this class - not the prototype's constructor 
+    // console.log('my constructor: ' + this.constructor); // here it's the constructor is the current instance's constructor, i.e this class - not the prototype's constructor
+    // it means that a Class does not use prototype 
+  }
+
+  static staticMethod(){
+    console.log("this is a static method");
   }
 }
 
 let child2 = new childClass2();
 let child2a = new childClass2();
-child2.printState();
+child2.printState("child2");
 child2.state2.open = false;
-child2.printState();
-child2a.printState();
+child2.printState("child2");
+child2a.printState("child2a");
 
-// TODO: NOTE that state2 is considered an instance member and not a "class" (prototype) member. It's not part of the prototype!
+// TODO: NOTE that state2 is considered an instance member - not a "class" (static) member and it's also not part of the prototype!
 // childClass2.state2.open = "unknown?";  
 // child2.printState();
 // child2a.printState();
@@ -371,5 +400,95 @@ child2a.printState();
 console.log(childClass2.prototype);
 // TODO: but the functions does go to the prototype, and changing them will change the function in the instances!
 childClass2.prototype.printState = null;
-console.log(child2);
-console.log(child2a);
+// child2.printState(); - throws an error since the function is deleted
+// TODO: static methods are called on the class itself:
+childClass2.staticMethod();
+// child2.staticMethod(); - throws an error!
+console.log("child2 constructor: ", child2.constructor);  // the class's constructor
+
+
+
+class Parent {
+
+  constructor(){
+    this.parent1Name = "Parent1";
+    this.parent2Name = "Parent2";
+  }
+}
+
+class ChildClass3 extends Parent {
+
+    constructor() {
+      super();
+      this.state = { open: true };
+    }
+}
+
+let child3 = new  ChildClass3();
+console.log("child3 parent member: ", child3.parent1Name);
+console.log("child3 constructor: ", child3.constructor); // the actual ("ChildClass3") class's constructor - 
+// although it also has a "super", the constructor is the child's constructor. 
+
+function ParentFunc(){
+  this.parent = "Parent";
+}
+function ChildFunc(){
+  ParentFunc.call(this);
+  this.name = "child!!!";
+} 
+let funcChild = new ChildFunc();
+console.log("funcChild parent member: ", funcChild.parent);
+console.log("funcChild constructor: ", funcChild.constructor); // the actual ("ChildFunc") function - although is also calls a "super" function.
+
+
+
+//---- this -----
+
+class thisTrial {
+
+  constructor(name){
+    this.name = name;
+  }
+
+  // this.lastName = "last";  - Error: can't declare a member using the "this" keyword outside the constructor;
+
+  lastName = "last"; // it is automatically referred as "this.lastName"!
+
+  printLastName() { // goes to the prototype
+    // console.log(lastName); Error - we must refer it as this.lastName 
+    console.log(this.lastName);
+  }
+
+  static doSomethingStatic(){
+    console.log(this); // "this" is not the instance since it's a static function.
+    // it should have been the object that the function was called from (e.g. the "thisTrial" class object or "window"),
+    // but see later that for any other object then the class, it will be "undefined", since class blocks are using strict mode.
+    // see MDN documentation for javascript classes.
+  }
+}
+
+let thisTrialInstance = new thisTrial();
+console.log(thisTrial.prototype); // prints the constructor and any other method: printLastName
+// thisTrial.printLastName(); - Error: it's not a static function!
+thisTrial.doSomethingStatic(); 
+let refToStaticFunc = thisTrial.doSomethingStatic;
+refToStaticFunc(); // prints undefined instead of "window"
+
+//-----------------------------------------
+
+// function test() {
+
+//   console.log(aa);
+//   var bb = foo();
+//   console.log(bb);
+  
+//   var aa = 1;
+//   var foo = function() {
+//   	return 2;
+//   }
+  
+//   // function foo() {
+//   // 	return 2;
+//   // }
+// }
+// test();
