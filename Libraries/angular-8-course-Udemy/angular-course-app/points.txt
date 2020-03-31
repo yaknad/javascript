@@ -1,0 +1,10 @@
+angular.json:
+configures the CLI project
+add bootstrap in section: architect.build.styles:
+"node_modules/bootstrap/dist/css/bootstrap.min.css" (put it before the global styles.css, so it's possible to override bootstrap in the global css)
+
+
+to enable binding:
+on app.module.ts FormsModule and add it to NgModule.imports
+1 way binding - {{ fieldName }}
+2 way binding - <input type="text" [(ngModel)]="fieldName">
