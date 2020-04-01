@@ -1,8 +1,21 @@
+STOPPED AT: lecture 19
+
+angular flow:
+Angular CLI (running by ng-serve) builds js bundles and injects them in the bottom of the index.html file (as seen in "view source" in the browser).
+The first code to run is main.ts. It bootstraps (starts) the app by passing the AppModule.
+AppModule, in its "bootstrap" field, tells angular it shoudl be familiar when bootstarping.
+Inside app.component, there's a "selector" field that tells angular to replace the app-root tag with the app.component.html template.
+-   We can have multiple custom html tags like "root-app" (root-app2 etc.) in index-html, register multiple components to AppModule's bootstrap field and 
+    configure each component's selector to it's own html tag. If mulitple components will be configured to the same html-tag, the last one in AggModule
+    bootstrap list will be taken. After that being said, the best practice is to have a single root component (app.component) and nest all other components in it.
+
 angular.json:
 configures the CLI project
 add bootstrap in section: architect.build.styles:
 "node_modules/bootstrap/dist/css/bootstrap.min.css" (put it before the global styles.css, so it's possible to override bootstrap in the global css)
 
+typescript:
+@Component - it's a Typescript decorator. Are these like attributes in C#/Java?
 
 to enable binding:
 on app.module.ts FormsModule and add it to NgModule.imports
