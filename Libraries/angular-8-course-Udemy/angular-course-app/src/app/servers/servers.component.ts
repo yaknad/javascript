@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   // selector: 'app-servers',
-  // selector: '.app-servers',
-  selector: '[app-servers]',
+  // selector: `.app-servers`,
+  selector: `[app-servers]`,
   template: `<div>
                 Server 1:
                 <app-server></app-server>
