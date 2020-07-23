@@ -1,5 +1,9 @@
 STOPPED AT: lecture 19
 
+cli:
+run project: ng serve
+create component: ng generate component X
+
 angular flow:
 Angular CLI (running by ng-serve) builds js bundles and injects them in the bottom of the index.html file (as seen in "view source" in the browser).
 The first code to run is main.ts. It bootstraps (starts) the app by passing the AppModule.
@@ -24,8 +28,14 @@ on app.module.ts FormsModule and add it to NgModule.imports
 2 way binding - <input type="text" [(ngModel)]="fieldName">
 
 components
-Custom code goes under the app folder. Best practice is to name a folder after the component's name.
-Component file's name will be in the structure of: name.component.ts
+-Custom code goes under the app folder. Best practice is to name a folder after the component's name.
+-Component file's name will be in the structure of: name.component.ts
+-when adding a component make sure it is registered in the @NgModule (when adding using the cli, it will be added automatically)
+-Componenet MUST have a "templateUrl" or a "template" value (selector and styles are optional). When using inline "template", we can use `` instead of '' to enable multiline templates.
+-Similar to templates, we can use StylesUrl or Styles (for inline styles - use `` instread of '' for multiline). Styles/Url gets an array of styles!
+-The Selector property can use css-selectors by element (selector: custom-tag-name), by attribute (selector:[custom-attribute-name]) or by class 
+(selector: .custom-class). id or pseudo (like :hover) will not work. Recomendation is to use the by element way.
+
 
 useful plugins:
 emmet - html auto complete
