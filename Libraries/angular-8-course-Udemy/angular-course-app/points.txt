@@ -30,6 +30,8 @@ on app.module.ts FormsModule and add it to NgModule.imports
 1 way binding - {{ fieldName }}
 2 way binding - <input type="text" [(ngModel)]="fieldName">
 
+casting is done with <> braces: (<HTMLInputElement>event.target).value;
+
 components:
 ***********
 - Custom code goes under the app folder. Best practice is to name a folder after the component's name.
@@ -37,10 +39,27 @@ components:
 - when adding a component make sure it is registered in the @NgModule (when adding using the cli, it will be added automatically)
 - Componenet MUST have a "templateUrl" or a "template" value (selector and styles are optional). When using inline "template", we can use `` instead of '' to enable multiline templates.
 - Similar to templates, we can use StylesUrl or Styles (for inline styles - use `` instread of '' for multiline). Styles/Url gets an array of styles!
-- The Selector property can use css-selectors by element (selector: custom-tag-name), by attribute (selector:[custom-attribute-name]) or by class. 
+- The Selector property can use css-selectors by element (selector: custom-tag-name), by attribute (selector:[custom-attribute-name]) or by class  
 (selector: .custom-class). In order to use the attribute or class selector that are Kebab-cased (aa-bbb), use `` instead of ''. 
-id or pseudo (like :hover) will not work. Recomendation is to use the by element way.
+id or pseudo (like :hover) will not work. Recomendation is to use the by element selector.
 
+Data Binding:
+*************
+Output data binding (model to template):
+* String interpolation: {{data}}
+* Property binding: [property]="data"
+React to user events (from ui to model):
+* Event binding: (event)="expression"
+Two-Way binding:
+[(ngModel)]="data"
+
+* String interpolation curley braces expression should eventually be resolved to a string (can be a 'string', a function call that returns string 
+or a member name that it's value will be toString()). We can't use a multi-block (like if blocks). It's possible to use ternary expressions.
+String interpolation works only inside the template itself, not inside another expression in the html page like inside a Property binding expression.
+* Property binding - when using [diabled]="someClassMember" the code relates not to the html "disabled" attribute, but directly to "disabled" DOM element property.
+* Event Binding - it possible to pass the event's data by using $event
+* Two Way Binding - combines property binding (from model to ui) and event bindings (from ui to model).
+requires the FormsModule module to be registered in AppModule (requires also: import { FormsData } from '@angular/forms';).
 
 useful plugins:
 emmet - html auto complete
